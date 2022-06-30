@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence App</title>
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+</head>
+
+<body>
+    <input id="search-input" class="form-control" placeholder="Search here" type="text">
+    <button type="submit" class="btn">Submit</button>
+
+    <div class="container">
+        <label for="country">Countries!!!</label>
+        <form class="form">
+            <div class="form__group">
+                <select id="country" name="country" data-dropdown>
+                    <option value="">Please select a country</option>
+                    <option value="australia">Australia</option>
+                    <option value="canada">Canada</option>
+                    <option value="china">China</option>
+                </select>
+            </div>
+
+        </form>
+    </div>
+    <p id="demo"></p>
+
+    <h1>With Dataframe</h1>
+    <table class="table">
+        <tr>
+            <th class="bg-info" data-colname="name" data-order="desc">Name</th>
+            <th data-colname="age" data-order="desc">Age</th>
+            <th data-colname="country" data-order="desc">Country</th>
+        </tr>
+        <tbody id="myTable1">
+        </tbody>
+    </table>
+</body>
+
+
+
+
+<script>
+    var json_df = JSON.parse('{{ json_df|tojson }}');
+    //const json_df = JSON.parse('{{ evidence_dataset|tojson }}');
+    //var json_df_alt = { "john": { "name": "John", "age": 30, "country": "New York" }, "jess": { "name": "Jess", "age": 28, "country": "Kansas" } };
+    console.log(json_df);
+    console.log(1 + 1)
+
+    document.getElementById("demo").innerHTML =
+        json_df[1].age;
+
+    buildTable(json_df)
+
+    function buildTable(data) {
+        var table = document.getElementById('myTable1')
+        table.innerHTML = ''
+        for (var key in data) {
+            var colname = `name-${key}`
+            var colage = `age-${key}`
+            var colbirth = `country-${key}`
+
+            // Add in the data for each column (The $ is just to insert a variable into the string)
+            var row = `<tr>
+                        <td>${data[key].name}</td>
+                        <td>${data[key].age}</td>
+                        <td><a href="https://www.google.com" target='_blank'>${data[key].country}</a></td>
+                   </tr>`
+            table.innerHTML += row
+        }
+    }
+</script>
+
+</html>
