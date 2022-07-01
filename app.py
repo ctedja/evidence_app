@@ -21,17 +21,19 @@ app.secret_key = "test"
 
 
 # Try with a custom dataframe
-test_data = [['mack', 10, 'china'], ['john', 15, 'canada'], ['jane', 14, 'australia']]
+test_data = [['jack', 23, 'china', 'https://www.google.com'],
+             ['jill', 22, 'canada', 'https://www.cnn.com'],
+             ['john', 24, 'canada', 'https://www.cnn.com'],
+             ['jane', 30, 'australia', 'https://www.bbc.com']]
 
 # Create the pandas DataFrame
-test_df = pd.DataFrame(test_data, columns=['name', 'age', 'country'])
+test_df = pd.DataFrame(test_data, columns=['name', 'age', 'country', 'link'])
 
 
 # Create a json of the dataframe
 #json_df = test_df.to_json()
 # json_df = test_df.set_index('Name').to_json(orient='index')
-json_df = test_df.to_dict(orient='index')
-json_df
+test_df = test_df.to_dict(orient='index')
 
 evidence_dataset = pd.read_excel('evidence_dataset.xlsx')
 evidence_dataset = pd.DataFrame(evidence_dataset)
@@ -42,19 +44,17 @@ evidence_dataset
 # Adding the headings=headings allows
 @app.route("/hello")
 def index():
-    return render_template("index.html", json_df=json_df, evidence_dataset=evidence_dataset)
+    return render_template("index.html", test_df=test_df, evidence_dataset=evidence_dataset)
 
 # @app.route("/test")
 # def test():
 #     return json_df
 
+
 if __name__ == '__main__':
     app.run(debug=True, port=4000)
-
-
 
 
 # evidence_dataset.describe()
 # evidence_dataset.info()
 # evidence_dataset.head()
-
