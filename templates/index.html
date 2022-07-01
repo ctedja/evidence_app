@@ -43,39 +43,6 @@
 
 
 <script>
-    // var mydata = JSON.parse('{{ test_df|tojson }}');
-    // console.log(mydata);
-
-    // document.getElementById("tester").innerHTML =
-    //     mydata[1].age;
-
-    // var countrySelector = document.getElementById('country');
-
-    // Array.from(countrySelector).forEach(function (filteredData) {
-    //     filteredData.addEventListener('click', function () {
-    //         buildTable(filteredData)
-    //     })
-    // })
-
-    // //buildTable(mydata) attempt #1
-    // function buildTable(data) {
-    //     var table = document.getElementById('myTable')
-    //     table.innerHTML = ''
-    //     for (var key in data) {
-    //         // var colname = `name-${key}`
-    //         // var colage = `age-${key}`
-    //         // var colbirth = `country-${key}`
-    //         // Add in the data for each column (The $ is just to insert a variable into the string)
-    //         var row = `<tr>
-    //                     <td>${data[key].name}</td>
-    //                     <td>${data[key].age}</td>
-    //                     <td><a href="${data[key].link}" target='_blank'>${data[key].country}</a></td>
-    //                </tr>`
-    //         table.innerHTML += row
-    //     }
-    // }
-
-
     //buildTable(mydata) attempt #2
 
     function buildTable(data) {
@@ -91,7 +58,8 @@
     }
 
     // Pull in our data
-    const evidenceData = JSON.parse('{{ test_df| tojson }}');
+    const evidenceData = JSON.parse('{{ test_df|tojson }}');
+    const evidenceData2 = JSON.parse('{{ evidence_dataset|tojson }}');
 
     // Turn the country selector drop-down into a filter 
     const countrySelector = document.getElementById('countrySelector');
