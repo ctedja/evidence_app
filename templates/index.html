@@ -16,7 +16,7 @@
         <label for="country">Countries</label>
         <form class="form">
             <div class="form__group">
-                <select id="country" name="country" data-dropdown>
+                <select id="countrySelector" name="country" data-dropdown>
                     <option value="">Please select a country</option>
                     <option value="australia">Australia</option>
                     <option value="canada">Canada</option>
@@ -29,11 +29,11 @@
 
     <h1>Table</h1>
     <table class="table">
-        <tr>
+        <!-- <tr>
             <th class="bg-info" data-colname="name" data-order="desc">Name</th>
             <th data-colname="age" data-order="desc">Age</th>
             <th data-colname="country" data-order="desc">Country</th>
-        </tr>
+        </tr> -->
         <tbody id="myTable">
         </tbody>
     </table>
@@ -43,41 +43,71 @@
 
 
 <script>
-    var mydata = JSON.parse('{{ test_df|tojson }}');
-    console.log(mydata);
+    // var mydata = JSON.parse('{{ test_df|tojson }}');
+    // console.log(mydata);
 
-    document.getElementById("tester").innerHTML =
-        mydata[1].age;
+    // document.getElementById("tester").innerHTML =
+    //     mydata[1].age;
 
-    var countrySelector = document.getElementById('country');
+    // var countrySelector = document.getElementById('country');
 
-    Array.from(countrySelector).forEach(function (filteredData) {
-        filteredData.addEventListener('click', function () {
-            buildTable(filteredData)
-        })
-    })
+    // Array.from(countrySelector).forEach(function (filteredData) {
+    //     filteredData.addEventListener('click', function () {
+    //         buildTable(filteredData)
+    //     })
+    // })
+
+    // //buildTable(mydata) attempt #1
+    // function buildTable(data) {
+    //     var table = document.getElementById('myTable')
+    //     table.innerHTML = ''
+    //     for (var key in data) {
+    //         // var colname = `name-${key}`
+    //         // var colage = `age-${key}`
+    //         // var colbirth = `country-${key}`
+    //         // Add in the data for each column (The $ is just to insert a variable into the string)
+    //         var row = `<tr>
+    //                     <td>${data[key].name}</td>
+    //                     <td>${data[key].age}</td>
+    //                     <td><a href="${data[key].link}" target='_blank'>${data[key].country}</a></td>
+    //                </tr>`
+    //         table.innerHTML += row
+    //     }
+    // }
 
 
+    //buildTable(mydata) attempt #2
 
-    //buildTable(mydata)
     function buildTable(data) {
-        var table = document.getElementById('myTable')
-        table.innerHTML = ''
-        for (var key in data) {
-            // var colname = `name-${key}`
-            // var colage = `age-${key}`
-            // var colbirth = `country-${key}`
-            // Add in the data for each column (The $ is just to insert a variable into the string)
-            var row = `<tr>
-                        <td>${data[key].name}</td>
-                        <td>${data[key].age}</td>
-                        <td><a href="${data[key].link}" target='_blank'>${data[key].country}</a></td>
-                   </tr>`
-            table.innerHTML += row
-        }
+        const table = document.getElementById('myTable')
+        table.innerHTML = data.map(function (row) {
+            let [name, age, country, link] = row;
+            return `<tr>
+          <td>${name}</td>
+          <td>${age}</td>
+          <td><a href="${link}" target='_blank'>${country}</a></td>
+        </tr>`;
+        }).join('');
     }
 
+    // Pull in our data
+    const evidenceData = JSON.parse('{{ test_df| tojson }}');
 
+    // Turn the country selector drop-down into a filter 
+    const countrySelector = document.getElementById('countrySelector');
+    countrySelector.addEventListener('change', function (evt) {
+        const value = evt.target.value;
+        if (value) {
+            buildTable(evidenceData.filter(function (row) {
+                let [name, age, country, link] = row;
+                return country === value
+            }));
+        } else {
+            buildTable(evidenceData);
+        }
+    });
+
+    buildTable(evidenceData)
 
 </script>
 

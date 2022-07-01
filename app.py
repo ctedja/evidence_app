@@ -25,15 +25,14 @@ test_data = [['jack', 23, 'china', 'https://www.google.com'],
              ['jill', 22, 'canada', 'https://www.cnn.com'],
              ['john', 24, 'canada', 'https://www.cnn.com'],
              ['jane', 30, 'australia', 'https://www.bbc.com']]
-
-# Create the pandas DataFrame
 test_df = pd.DataFrame(test_data, columns=['name', 'age', 'country', 'link'])
-
 
 # Create a json of the dataframe
 #json_df = test_df.to_json()
 # json_df = test_df.set_index('Name').to_json(orient='index')
-test_df = test_df.to_dict(orient='index')
+#test_df = test_df.to_dict(orient='index')
+test_df = test_df.values.tolist()
+test_df
 
 evidence_dataset = pd.read_excel('evidence_dataset.xlsx')
 evidence_dataset = pd.DataFrame(evidence_dataset)
