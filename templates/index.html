@@ -18,7 +18,7 @@
             <div class="form__group">
                 <select id="countrySelector" name="country" data-dropdown>
                     <option value="">Please select a country</option>
-                    <option value="australia">Australia</option>
+                    <option value="Afghanistan">Afghanistan</option>
                     <option value="canada">Canada</option>
                     <option value="china">China</option>
                 </select>
@@ -29,11 +29,6 @@
 
     <h1>Table</h1>
     <table class="table">
-        <!-- <tr>
-            <th class="bg-info" data-colname="name" data-order="desc">Name</th>
-            <th data-colname="age" data-order="desc">Age</th>
-            <th data-colname="country" data-order="desc">Country</th>
-        </tr> -->
         <tbody id="myTable">
         </tbody>
     </table>
@@ -43,23 +38,27 @@
 
 
 <script>
-    //buildTable(mydata) attempt #2
+    // //buildTable(mydata) attempt #2
 
+    // Build Table Attempt #3
     function buildTable(data) {
         const table = document.getElementById('myTable')
         table.innerHTML = data.map(function (row) {
-            let [name, age, country, link] = row;
+            let [Country, Title, Category, Date, Link, Image] = row;
             return `<tr>
-          <td>${name}</td>
-          <td>${age}</td>
-          <td><a href="${link}" target='_blank'>${country}</a></td>
-        </tr>`;
+                <td><img src=${Image}></td>             
+                <td><a href="${Link}" target='_blank'>${Title}</a></td>
+                <td>${Country}</td>
+                <td>${Category}</td>
+                <td>${Date}</td>
+                </tr>`;
         }).join('');
     }
 
     // Pull in our data
-    const evidenceData = JSON.parse('{{ test_df|tojson }}');
-    const evidenceData2 = JSON.parse('{{ evidence_dataset|tojson }}');
+    //const evidenceData = JSON.parse('{{ test_df|tojson }}');
+    const evidenceData = JSON.parse('{{ evidence_dataset|tojson }}'.replace((/\bnan\b/g, "null")));
+
 
     // Turn the country selector drop-down into a filter 
     const countrySelector = document.getElementById('countrySelector');
@@ -67,8 +66,8 @@
         const value = evt.target.value;
         if (value) {
             buildTable(evidenceData.filter(function (row) {
-                let [name, age, country, link] = row;
-                return country === value
+                let [Country, Title, Category, Date, Link, Image] = row;
+                return Country === value
             }));
         } else {
             buildTable(evidenceData);
@@ -76,6 +75,7 @@
     });
 
     buildTable(evidenceData)
+    console.log(evidenceData)
 
 </script>
 
