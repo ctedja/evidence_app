@@ -1,0 +1,163 @@
+body {
+    color: #404040;
+    font: 400 15px/22px 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    overflow:hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.title {
+    position: absolute;
+    width: 100%;
+    height: 10%;
+    top: 0;
+    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    overflow: hidden;
+    background-color:#e6f2f8;
+}
+
+h1 {
+    color:#007dbc;
+    font-size:18px;
+    position:absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding-left:10px;
+}
+
+.filters {
+    position: absolute;
+    width: 34%;
+    height: 100%;
+    top: 10%;
+    overflow: hidden;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+.main {
+    position: absolute;
+    width: 66%;
+    height: 100%;
+    left: 34%;
+    top: 10%;
+    overflow: auto;
+    padding-top:20px;
+}
+
+.form-control {
+    position:relative;
+    width: 80%;
+    height: 5%;
+    left: 0;
+    top: 10%;
+}
+
+.countrySelector {
+    position: relative;
+    width: 80%;
+    height: 5%;
+    left: 0;
+    top: 20%;
+}
+
+.categorySelector {
+    position: relative;
+    width: 80%;
+    height: 5%;
+    left: 0;
+    top: 30%;
+}
+
+table {
+    font-size: 10px;
+    padding-left:10px;
+    border-bottom: 0px;
+}
+
+table td {
+    font-size: 10px;
+    margin: 10px;
+    border-bottom: 0px;
+}
+
+.tableThumbnail {
+    width: 50px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.tableTitle {
+    top:0;
+    font-size: 14px;
+    vertical-align: bottom;
+}
+
+.tableCountry {
+    width: 10%;
+}
+
+.tableCountry span {
+    font-size: 10px;
+    color:#007dbc;
+    background-color:#e6f2f8;
+    border-bottom: 0px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.tableCategory {
+    font-size: 10px;
+    color:#adadad;
+}
+
+.tableDate {
+    font-size: 10px;
+    color:#adadad;
+}
+
+.tableSpacer1 {
+    height: 15px;
+    width:100%;
+    border-bottom: solid 0.5px lightgray;
+}
+
+.tableSpacer2 {
+    height: 30px;
+}
+
+a {
+    color: #007dbc;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #007dbc;
+    text-decoration: none;
+}
+
+a:hover {
+    opacity: 0.5;
+}
+
+::-webkit-scrollbar {
+	width: 5px;
+	height: 5px;
+	border-left: 0;
+	background: rgba(0, 0, 0, 0.05);
+  }
+ ::-webkit-scrollbar-track {
+	background: none;
+  }
+ ::-webkit-scrollbar-thumb {
+	background: #b3d8eb;
+	border-radius: 0;
+  }
+

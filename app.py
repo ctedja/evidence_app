@@ -1,6 +1,8 @@
 import pandas as pd
 from flask import Flask, render_template, jsonify, render_template_string, request, flash
 import json
+import datetime
+from datetime import datetime
 
 # Just for full .head() viewing options
 pd.options.display.max_columns = None
@@ -26,11 +28,11 @@ test_df = test_df.values.tolist()
 evidence_dataset = pd.read_excel('evidence_dataset.xlsx')
 evidence_dataset = pd.DataFrame(evidence_dataset)
 evidence_dataset = evidence_dataset.filter(['Country', 'Title', 'Category', 'Date', 'Link', 'Image'])
-#
+evidence_dataset['Date'] = evidence_dataset['Date'].dt.date
 evidence_dataset = evidence_dataset.fillna("")
 #evidence_dataset = evidence_dataset.to_json(orient='values')
 evidence_dataset = evidence_dataset.values.tolist()
-evidence_dataset
+
 
 # # Try again
 # evidence_dataset = [['Afghanistan', '(SEIA) UNDP COVID-19 Impact: Short term disruptions and policy considerations', 'Assessments (Multi-Sector)', 'Timestamp("2020-06-01 00:00:00")', 'https://www.undp.org/content/dam/undp/library/covid19/Afghanistan - Covid19 Impact Note - Final  April 15 2020.pdf']]

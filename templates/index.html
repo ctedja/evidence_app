@@ -5,78 +5,178 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evidence App</title>
-    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    <!-- Bootstrap for overall -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- Bootstrap stuff -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+        integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+        crossorigin="anonymous"></script>
+    <!-- Custom CSS file -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Datatables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
 </head>
 
 <body>
-    <input id="search-input" class="form-control" placeholder="Search here" type="text">
-    <button type="submit" class="btn">Submit</button>
-
-    <div class="container">
-        <label for="country">Countries</label>
+    <div class="title">
+        <h1>Regional Evidence</h1>
+    </div>
+    <div class="filters">
         <form class="form">
-            <div class="form__group">
-                <select id="countrySelector" name="country" data-dropdown>
+            <div class="form_group">
+                <input id="searchInput" class="form-control" placeholder="Search here" type="text">
+                <!-- <button type="submit" class="btn">Submit</button> -->
+            </div>
+            <div>
+                <select id="countrySelector" class="countrySelector" name="country" data-dropdown>
                     <option value="">Please select a country</option>
                     <option value="Afghanistan">Afghanistan</option>
                     <option value="canada">Canada</option>
                     <option value="china">China</option>
                 </select>
             </div>
-        </form>
+            <div>
+                <select id="categorySelector" class="categorySelector" name="category" data-dropdown>
+                    <option value="">Please select a category</option>
+                    <option value="Situation Report">Situation Report</option>
+                    <option value="Market/Price Monitoring">Market/Price Monitoring</option>
+                    <option value="Dashboards/Maps/Infographics">Dashboards/Maps/Infographics</option>
+                </select>
+            </div>
+            <div>
+                <select id="dateSelector" class="dateSelector" name="date" data-dropdown>
+                    <option value="">Please select a category</option>
+                    <option value="Sun, 05 Jun 2022 17:00:00 GMT">Sun, 05 Jun 2022 17:00:00 GMT</option>
+                    <option value="2022-06-04">2022-06-04</option>
+                    <option value="2022-06-03">2022-06-03</option>
+                </select>
+            </div>
+            <div class="slideContainer">
+                <input type="range" min="2020-01-01" max="2022-01-01" value="2020-01-01" id="slider" class="slider">
+                <input type="range" min="2020-01-01" max="2022-01-01" value="2022-01-01" id="slider" class="slider">
+                <p><span id="minDate">minDate</span></p>
+                <p><span id="maxDate">maxDate</span></p>
+            </div>
+            <div>
+                <button class="btn btn-success" onclick="$(this).hide();">Click Me!</button>
+            </div>
     </div>
-    <p id="tester"></p>
+    </div>
+    </form>
+    </div>
 
-    <h1>Table</h1>
-    <table class="table">
-        <tbody id="myTable">
-        </tbody>
-    </table>
-</body>
-
-
-
-
-<script>
-    // //buildTable(mydata) attempt #2
-
-    // Build Table Attempt #3
-    function buildTable(data) {
-        const table = document.getElementById('myTable')
-        table.innerHTML = data.map(function (row) {
-            let [Country, Title, Category, Date, Link, Image] = row;
-            return `<tr>
-                <td><img src=${Image}></td>             
-                <td><a href="${Link}" target='_blank'>${Title}</a></td>
-                <td>${Country}</td>
-                <td>${Category}</td>
-                <td>${Date}</td>
-                </tr>`;
-        }).join('');
-    }
-
-    // Pull in our data
-    //const evidenceData = JSON.parse('{{ test_df|tojson }}');
-    const evidenceData = JSON.parse('{{ evidence_dataset|tojson }}'.replace((/\bnan\b/g, "null")));
+    <div class="main" id="tester">
+        <table class="table" id="table">
+            <thead>
+                <tr>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                </tr>
+            </thead>
+            <tbody id="myTable">
+            </tbody>
+        </table>
+    </div>
 
 
-    // Turn the country selector drop-down into a filter 
-    const countrySelector = document.getElementById('countrySelector');
-    countrySelector.addEventListener('change', function (evt) {
-        const value = evt.target.value;
-        if (value) {
-            buildTable(evidenceData.filter(function (row) {
+    <script>
+        // //buildTable(mydata) attempt #2
+
+        // Build Table Attempt #3
+        function buildTable(data) {
+            const table = document.getElementById('myTable')
+            table.innerHTML = data.map(function (row) {
                 let [Country, Title, Category, Date, Link, Image] = row;
-                return Country === value
-            }));
-        } else {
-            buildTable(evidenceData);
+                return `<tr>
+                    <td rowspan="3">
+                        <a href="${Link}" target='_blank'>
+                            <img class="tableThumbnail" src=${Image}></td></a>
+                </tr>            
+                <tr>
+                    <td colspan="3" class="tableTitle"><a href="${Link}" target='_blank'>${Title}</a></td>
+                </tr>
+                <tr>
+                    <td class="tableCountry"><span>&nbsp;&nbsp;${Country}&nbsp;&nbsp;</span></td>
+                    <td class="tableCategory">${Category}</td>
+                    <td class="tableDate">${Date}</td>
+                </tr>
+                <tr>
+                    <td class="tableSpacer1" colspan="4"> </td>
+                </tr>
+                <tr>
+                    <td class="tableSpacer2" colspan="4"> </td>
+                </tr>`;
+            }).join('');
         }
-    });
 
-    buildTable(evidenceData)
-    console.log(evidenceData)
+        // Pull in our data
+        const evidenceData = JSON.parse('{{ evidence_dataset|tojson }}');
 
-</script>
+        // // Turn the country selector drop-down into a filter 
+        // const countrySelector = document.getElementById('countrySelector');
+        // countrySelector.addEventListener('change', function (evt) {
+        //     const value = evt.target.value;
+        //     if (value) {
+        //         buildTable(evidenceData.filter(function (row) {
+        //             let [Country, Title, Category, Date, Link, Image] = row;
+        //             return Country === value
+        //         }));
+        //     } else {
+        //         buildTable(evidenceData);
+        //     }
+        // });
+
+        // // Turn the category selector drop-down into a filter
+        // const categorySelector = document.getElementById('categorySelector');
+        // categorySelector.addEventListener('change', function (evt) {
+        //     const value = evt.target.value;
+        //     if (value) {
+        //         buildTable(evidenceData.filter(function (row) {
+        //             let [Country, Title, Category, Date, Link, Image] = row;
+        //             return Category === value
+        //         }));
+        //     } else {
+        //         buildTable(evidenceData);
+        //     }
+        // });
+
+
+        // // Turn the date selector drop-down into a filter
+        // const dateSelector = document.getElementById('dateSelector');
+        // categorySelector.addEventListener('change', function (evt) {
+        //     const value = evt.target.value;
+        //     if (value) {
+        //         buildTable(evidenceData.filter(function (row) {
+        //             let [Country, Title, Category, Date, Link, Image] = row;
+        //             return Date === value
+        //         }));
+        //     } else {
+        //         buildTable(evidenceData);
+        //     }
+        // });
+
+        // const maxDate = document.getElementsByClassName("maxDate")
+
+        // var slider = document.getElementById("slider")
+        // var output = document.getElementById("value")
+
+        buildTable(evidenceData)
+
+        $(document).ready(function () {
+            $('.table').DataTable();
+        });
+    </script>
+
+</body>
 
 </html>
