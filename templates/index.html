@@ -26,30 +26,40 @@
 </head>
 
 <body>
-    <div class="title">
+    <!-- <div class="title">
         <h1>Regional Evidence</h1>
-    </div>
+    </div> -->
     <div class="filters">
+        <div class="title">
+            <span><img src="{{ url_for('static', filename='images/wfpLogo.png') }}" style="height:25px;" />
+                &nbsp;RBB Evidence
+                <br><br><br>
+            </span>
+        </div>
         <form class="form">
             <div>
-                <input type="text" id="searchInput" class="searchInput" placeholder="Search here">
+                <input type="text" id="searchInput" class="form-control" placeholder="&#xf002;&nbsp;&nbsp;Search">
             </div>
-            <div>
-                <select id="countrySelector" class="countrySelector" name="country" data-dropdown>
-                    <option value="">Please select a country</option>
+            <br>
+            <div class="select">
+                <select id="countrySelector" class="form-select selectp" name="country" data-dropdown>
+                    <option value="">&#xf3c5;&nbsp;&nbsp;Country</option>
                     <option value="Afghanistan">Afghanistan</option>
                     <option value="canada">Canada</option>
                     <option value="china">China</option>
                 </select>
             </div>
+            <br>
             <div>
-                <select id="categorySelector" class="categorySelector" name="category" data-dropdown>
-                    <option value="">Please select a category</option>
+                <select id="categorySelector" class="form-select" name="category" data-dropdown>
+                    <option value="">&#xf550;&nbsp;&nbsp;Category</option>
                     <option value="Situation Report">Situation Report</option>
                     <option value="Market/Price Monitoring">Market/Price Monitoring</option>
                     <option value="Dashboards/Maps/Infographics">Dashboards/Maps/Infographics</option>
                 </select>
             </div>
+            <br>
+            <br>
             <div style="width:200px;">
                 <input type="text" class="js-range-slider" value="" />
             </div>
@@ -69,9 +79,7 @@
 
 
     <script>
-        // //buildTable(mydata) attempt #2
-
-        // Build Table Attempt #3
+        // Build Table
         function buildTable(data) {
             const table = document.getElementById('myTable')
             table.innerHTML = data.map(function (row) {
@@ -93,49 +101,49 @@
         // Pull in our data
         const evidenceData = JSON.parse('{{ evidence_dataset|tojson }}');
 
-        // // Turn the country selector drop-down into a filter 
-        // const countrySelector = document.getElementById('countrySelector');
-        // countrySelector.addEventListener('change', function (evt) {
-        //     const value = evt.target.value;
-        //     if (value) {
-        //         buildTable(evidenceData.filter(function (row) {
-        //             let [Country, Title, Category, Date, Link, Image] = row;
-        //             return Country === value
-        //         }));
-        //     } else {
-        //         buildTable(evidenceData);
-        //     }
-        // });
+        // Turn the country selector drop-down into a filter 
+        const countrySelector = document.getElementById('countrySelector');
+        countrySelector.addEventListener('change', function (evt) {
+            const value = evt.target.value;
+            if (value) {
+                buildTable(evidenceData.filter(function (row) {
+                    let [Country, Title, Category, Date, Link, Image] = row;
+                    return Country === value
+                }));
+            } else {
+                buildTable(evidenceData);
+            }
+        });
 
-        // // Turn the category selector drop-down into a filter
-        // const categorySelector = document.getElementById('categorySelector');
-        // categorySelector.addEventListener('change', function (evt) {
-        //     const value = evt.target.value;
-        //     if (value) {
-        //         buildTable(evidenceData.filter(function (row) {
-        //             let [Country, Title, Category, Date, Link, Image] = row;
-        //             return Category === value
-        //         }));
-        //     } else {
-        //         buildTable(evidenceData);
-        //     }
-        // });
+        // Turn the category selector drop-down into a filter
+        const categorySelector = document.getElementById('categorySelector');
+        categorySelector.addEventListener('change', function (evt) {
+            const value = evt.target.value;
+            if (value) {
+                buildTable(evidenceData.filter(function (row) {
+                    let [Country, Title, Category, Date, Link, Image] = row;
+                    return Category === value
+                }));
+            } else {
+                buildTable(evidenceData);
+            }
+        });
 
 
 
-        // // Turn the date selector drop-down into a filter
-        // const dateSelector = document.getElementById('dateSelector');
-        // categorySelector.addEventListener('change', function (evt) {
-        //     const value = evt.target.value;
-        //     if (value) {
-        //         buildTable(evidenceData.filter(function (row) {
-        //             let [Country, Title, Category, Date, Link, Image] = row;
-        //             return Date === value
-        //         }));
-        //     } else {
-        //         buildTable(evidenceData);
-        //     }
-        // });
+        // Turn the date selector drop-down into a filter
+        const dateSelector = document.getElementById('dateSelector');
+        categorySelector.addEventListener('change', function (evt) {
+            const value = evt.target.value;
+            if (value) {
+                buildTable(evidenceData.filter(function (row) {
+                    let [Country, Title, Category, Date, Link, Image] = row;
+                    return Date === value
+                }));
+            } else {
+                buildTable(evidenceData);
+            }
+        });
 
 
 
@@ -149,30 +157,18 @@
         let searchReplace = document.getElementsByClassName('dataTables_filter')
         console.log(searchReplace)
 
-        // $(document).ready(function () {
-        //     $('.mydatatable').DataTable({
-        //         "pagingType": "simple",
-        //         "ordering": "false",
-        //         "dom": '<<t>fip>'
-        //     });
-        // });
-
+        // Pull in the Data Tables via jQuery
         $(document).ready(function () {
             oTable = $('.mydatatable').DataTable({
                 "pagingType": "simple",
                 "ordering": "false",
                 "dom": '<<t>ip>'
             });
+            // Move the search filter to the side
             $('#searchInput').keyup(function () {
                 oTable.search($(this).val()).draw();
             })
         });
-
-        // oTable = $('.mydatatable').DataTable({
-        //     $('#myInputTextField').keyup(function () {
-        //         oTable.search($(this).val()).draw();
-        //     })
-        // })
 
 
     </script>
