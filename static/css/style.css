@@ -61,6 +61,7 @@ h1 {
     font-size:12px;
     max-width:80%;
     border: none;
+    background-color: #e6f2f8;
     font-family: 'Open Sans', 'Helvetica Neue', sans-serif, 'FontAwesome';
 }
 
@@ -69,6 +70,7 @@ h1 {
     font-size:12px;
     max-width:80%;
     box-shadow: 0 0 0 0.25rem #cce5f2;
+    background-color: #e6f2f8;
     color: #767676;
 }
 
@@ -81,21 +83,47 @@ h1 {
     font-size:12px;
     max-width:80%;
     color: #767676;
-    margin-left: 12px;
-    padding: 0 1em 0 0;
+    padding-left: 10px;
     margin: 0;
     width: 100%;
     cursor: inherit;
-    line-height: inherit;
     border: none;
     /* background: url(https://stackoverflow.com/favicon.ico) 0% / 15% no-repeat white; */
 }
 
 .form-select *{
     font-size:12px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance:none;
     max-width:80%;
+    line-height: 500%;
+    padding-top: 30px;
     border: none;
+    height:50px;
+    padding:10px;
+    line-height: 200px;
     color: #007dbc;
+}
+
+.form-select option{
+    font-size:12px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance:none;
+    max-width:80%;
+    line-height: 500%;
+    padding: 30px;
+    border: none;
+    height:50px;
+    padding:10px;
+    line-height: 200px;
+    height:40px;
+    color: red;
+}
+
+form-select.decorated option:hover {
+    box-shadow: 0 0 10px 100px red inset;
 }
 
 .countrySelector {
