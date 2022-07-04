@@ -15,13 +15,14 @@ app.secret_key = "test"
 
 # Try with a custom dataframe
 test_df = pd.DataFrame([
-    ['jack', 22, 'china', 'https://www.google.com'],
-    ['jill', 22, 'canada', 'https://www.cnn.com'],
-    ['john', 24, 'canada', 'https://www.cnn.com'],
-    ['jane', 30, 'australia','https://www.bbc.com']],
-    columns=['name', 'age', 'country', 'link'])
+    ['Australia', 'Report #1', 'Category #1', '2021-01-01', 'https://www.google.com', 'https://reliefweb.int/sites/default/files/styles/thumbnail/public/previews/c5/2d/c52de4ba-42d8-4383-8310-eb1a6966e803.png'],
+    ['Canada', 'Report #2', 'Category #1', '2021-01-01', 'https://www.google.com', 'https://reliefweb.int/sites/default/files/styles/thumbnail/public/previews/c5/2d/c52de4ba-42d8-4383-8310-eb1a6966e803.png'],
+    ['China', 'Report #3', 'Category #2', '2021-01-01', 'https://www.google.com', 'https://reliefweb.int/sites/default/files/styles/thumbnail/public/previews/c5/2d/c52de4ba-42d8-4383-8310-eb1a6966e803.png']],
+    columns=['Country', 'Title', 'Category', 'Date', 'Link', 'Image'])
+test_df['Date'] = pd.to_datetime(test_df['Date'])
 
 # Create a json of the dataframe
+test_df = test_df.fillna("")
 test_df = test_df.values.tolist()
 
 
@@ -41,7 +42,6 @@ evidence_dataset = evidence_dataset.values.tolist()
 # 1+1
 
 
-# Adding the headings=headings allows
 @app.route("/hello")
 def index():
     return render_template("index.html", test_df=test_df, evidence_dataset=evidence_dataset)

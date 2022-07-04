@@ -22,7 +22,7 @@
     <!-- Datatables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-
+    <script src="https://kit.fontawesome.com/f3135b3376.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -31,9 +31,8 @@
     </div>
     <div class="filters">
         <form class="form">
-            <div class="form_group">
-                <input id="searchInput" class="form-control" placeholder="Search here" type="text">
-                <!-- <button type="submit" class="btn">Submit</button> -->
+            <div>
+                <input type="text" id="searchInput" class="searchInput" placeholder="Search here">
             </div>
             <div>
                 <select id="countrySelector" class="countrySelector" name="country" data-dropdown>
@@ -51,37 +50,17 @@
                     <option value="Dashboards/Maps/Infographics">Dashboards/Maps/Infographics</option>
                 </select>
             </div>
-            <div>
-                <select id="dateSelector" class="dateSelector" name="date" data-dropdown>
-                    <option value="">Please select a category</option>
-                    <option value="Sun, 05 Jun 2022 17:00:00 GMT">Sun, 05 Jun 2022 17:00:00 GMT</option>
-                    <option value="2022-06-04">2022-06-04</option>
-                    <option value="2022-06-03">2022-06-03</option>
-                </select>
+            <div style="width:200px;">
+                <input type="text" class="js-range-slider" value="" />
             </div>
-            <div class="slideContainer">
-                <input type="range" min="2020-01-01" max="2022-01-01" value="2020-01-01" id="slider" class="slider">
-                <input type="range" min="2020-01-01" max="2022-01-01" value="2022-01-01" id="slider" class="slider">
-                <p><span id="minDate">minDate</span></p>
-                <p><span id="maxDate">maxDate</span></p>
-            </div>
-            <div>
-                <button class="btn btn-success" onclick="$(this).hide();">Click Me!</button>
-            </div>
+        </form>
     </div>
     </div>
-    </form>
-    </div>
-
     <div class="main" id="tester">
-        <table class="table" id="table">
+        <table class="table mydatatable" id="table">
             <thead>
-                <tr>
-                    <th>1</th>
-                    <th>2</th>
-                    <th>3</th>
-                    <th>4</th>
-                </tr>
+                <th> </th>
+                <th> </th>
             </thead>
             <tbody id="myTable">
             </tbody>
@@ -98,26 +77,18 @@
             table.innerHTML = data.map(function (row) {
                 let [Country, Title, Category, Date, Link, Image] = row;
                 return `<tr>
-                    <td rowspan="3">
-                        <a href="${Link}" target='_blank'>
-                            <img class="tableThumbnail" src=${Image}></td></a>
-                </tr>            
-                <tr>
-                    <td colspan="3" class="tableTitle"><a href="${Link}" target='_blank'>${Title}</a></td>
-                </tr>
-                <tr>
-                    <td class="tableCountry"><span>&nbsp;&nbsp;${Country}&nbsp;&nbsp;</span></td>
-                    <td class="tableCategory">${Category}</td>
-                    <td class="tableDate">${Date}</td>
-                </tr>
-                <tr>
-                    <td class="tableSpacer1" colspan="4"> </td>
-                </tr>
-                <tr>
-                    <td class="tableSpacer2" colspan="4"> </td>
-                </tr>`;
+                <td><br><br>
+                <a href="${Link}" target='_blank'>
+                    <img class="tableThumbnail" src=${Image}><br><br></td></a>
+                <td>
+                    <span class="tableTitle"><br><br><a href="${Link}" target='_blank'>${Title}</a><br></span>
+                    <span class="tableCountry"><span>&nbsp;&nbsp;${Country}&nbsp;&nbsp;</span></span>&nbsp;&nbsp;
+                    <span class="tableCategory">&nbsp;&nbsp;${Category}&nbsp;&nbsp;</span>
+                    <span class="tableDate"><span><br>&nbsp;&nbsp;<i class="far fa-calendar"></i>&nbsp;&nbsp;${Date}</span></span></td>
+            </tr>`;
             }).join('');
         }
+
 
         // Pull in our data
         const evidenceData = JSON.parse('{{ evidence_dataset|tojson }}');
@@ -151,6 +122,7 @@
         // });
 
 
+
         // // Turn the date selector drop-down into a filter
         // const dateSelector = document.getElementById('dateSelector');
         // categorySelector.addEventListener('change', function (evt) {
@@ -165,6 +137,8 @@
         //     }
         // });
 
+
+
         // const maxDate = document.getElementsByClassName("maxDate")
 
         // var slider = document.getElementById("slider")
@@ -172,9 +146,35 @@
 
         buildTable(evidenceData)
 
+        let searchReplace = document.getElementsByClassName('dataTables_filter')
+        console.log(searchReplace)
+
+        // $(document).ready(function () {
+        //     $('.mydatatable').DataTable({
+        //         "pagingType": "simple",
+        //         "ordering": "false",
+        //         "dom": '<<t>fip>'
+        //     });
+        // });
+
         $(document).ready(function () {
-            $('.table').DataTable();
+            oTable = $('.mydatatable').DataTable({
+                "pagingType": "simple",
+                "ordering": "false",
+                "dom": '<<t>ip>'
+            });
+            $('#searchInput').keyup(function () {
+                oTable.search($(this).val()).draw();
+            })
         });
+
+        // oTable = $('.mydatatable').DataTable({
+        //     $('#myInputTextField').keyup(function () {
+        //         oTable.search($(this).val()).draw();
+        //     })
+        // })
+
+
     </script>
 
 </body>
