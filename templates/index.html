@@ -45,7 +45,7 @@
     <!-- <div class="title">
         <h1>Regional Evidence</h1>
     </div> -->
-    
+
     <div class="filters">
         <div class="title">
             <span><img src="{{ url_for('static', filename='images/wfpLogo.png') }}" style="height:25px;" />
@@ -98,13 +98,21 @@
             </table>
         </form>
     </div>
-    </div>
 
     <div class="main">
-        <table class="table mydatatable" id="table">
+        <table class="table mydatatable" id="mydatatable">
             <thead>
-                <th> </th>
-                <th> </th>
+                <tr>
+                    <!-- <th class="text-center"><input type="checkbox" class="selectAll" name="selectAll" value="all"></th>
+                    <th>imageShow</th>
+                    <th>valueShow</th>
+                    <th>countrySearch</th>
+                    <th>categorySearch</th> -->
+                    <th> </th>
+                    <th> </th>
+                    <th> </th>
+                    <th> </th>
+                </tr>
             </thead>
             <tbody id="myTable">
             </tbody>
@@ -126,7 +134,14 @@
                     <span class="tableTitle"><br><br><a href="${Link}" target='_blank'>${Title}</a><br></span>
                     <span class="tableCountry"><span>&nbsp;&nbsp;${Country}&nbsp;&nbsp;</span></span>&nbsp;&nbsp;
                     <span class="tableCategory">&nbsp;&nbsp;${Category}&nbsp;&nbsp;</span>
-                    <span class="tableDate"><span><br>&nbsp;&nbsp;<i class="far fa-calendar"></i>&nbsp;&nbsp;${Date}</span></span></td>
+                    <span class="tableDate"><span><br>&nbsp;&nbsp;<i class="far fa-calendar"></i>&nbsp;&nbsp;${Date}</span></span>
+                </td>
+                <td>
+                    ${Country}
+                </td>
+                <td>
+                    ${Category}
+                </td>
             </tr>`;
             }).join('');
         }
@@ -136,22 +151,22 @@
         //const evidenceData = JSON.parse('{{ test_df|tojson }}');
 
 
-        // Trying to build min max date
-        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-            var min = parseInt($('#min').val(), 10);
-            var max = parseInt($('#max').val(), 10);
-            var date = parseFloat(data[3]) || 0; // use data for the age column
+        // // Trying to build min max date
+        // $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+        //     var min = parseInt($('#min').val(), 10);
+        //     var max = parseInt($('#max').val(), 10);
+        //     var date = parseFloat(data[3]) || 0; // use data for the age column
 
-            if (
-                (isNaN(min) && isNaN(max)) ||
-                (isNaN(min) && date <= max) ||
-                (min <= date && isNaN(max)) ||
-                (min <= date && date <= max)
-            ) {
-                return true;
-            }
-            return false;
-        });
+        //     if (
+        //         (isNaN(min) && isNaN(max)) ||
+        //         (isNaN(min) && date <= max) ||
+        //         (min <= date && isNaN(max)) ||
+        //         (min <= date && date <= max)
+        //     ) {
+        //         return true;
+        //     }
+        //     return false;
+        // });
 
 
 
@@ -161,7 +176,12 @@
                 "pagingType": "simple",
                 "ordering": "false",
                 "select": "single",
-                "dom": '<<t>ip>'
+                "dom": "<<t>ip>",
+                "columnDefs": [{
+                        targets:[2,3],
+                        visible:false,
+                        searchable:true,
+                    }]
             });
             // Add the search filter to the side
             $('#searchInput').keyup(function () {
@@ -169,16 +189,47 @@
             });
             // Country Selector
             $('select#countrySelector').change(function () {
-                oTable.search($(this).val()).draw();
+                oTable.columns(2).search($(this).val()).draw();
             });
             $('select#categorySelector').change(function () {
-                oTable.search($(this).val()).draw();
+                oTable.columns(3).search($(this).val()).draw();
             });
             // Min/Max
             $('#min, #max').keyup(function () {
                 oTable.draw();
             });
-        });
+        })
+
+        // $(document).ready(function () {
+        //     var oTable = $('#mydatatable').DataTable(
+        //         {
+        //             columnDefs: [
+        //                 {
+        //                     orderable: false,
+        //                     className: 'text-center',
+        //                     targets: 0,
+        //                 }]
+        //         });
+        //     $(".selectAll").on("click", function (e) {
+        //         if ($(this).is(":checked")) {
+        //             oTable.rows().select();
+        //         } else {
+        //             oTable.rows().deselect();
+        //         }
+        //     });
+
+        //     $('#searchInput').on('input', () => {
+        //         oTable.search($('#searchInput').val()).draw();
+        //     });
+
+        //     $('select#countrySelector').on('change', () => {
+        //         oTable.search($("#countrySelector").val()).draw();
+        //     });
+
+        //     $('select#categorySelector').on('change', () => {
+        //         oTable.search($("#categorySelector").val()).draw();
+        //     });
+        // });
 
 
         // $(document).ready(function () {
