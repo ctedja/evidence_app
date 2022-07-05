@@ -15,16 +15,16 @@ app.secret_key = "test"
 
 # Try with a custom dataframe
 test_df = pd.DataFrame([
-    ['Australia', 'Report #1', 'Category #1', '2021-01-01', 'https://www.google.com', 'https://reliefweb.int/sites/default/files/styles/thumbnail/public/previews/c5/2d/c52de4ba-42d8-4383-8310-eb1a6966e803.png'],
-    ['Canada', 'Report #2', 'Category #1', '2021-01-01', 'https://www.google.com', 'https://reliefweb.int/sites/default/files/styles/thumbnail/public/previews/c5/2d/c52de4ba-42d8-4383-8310-eb1a6966e803.png'],
-    ['China', 'Report #3', 'Category #2', '2021-01-01', 'https://www.google.com', 'https://reliefweb.int/sites/default/files/styles/thumbnail/public/previews/c5/2d/c52de4ba-42d8-4383-8310-eb1a6966e803.png']],
+    ['Afghanistan', 'Report #1', 'Category #1', '2021-01-01', 'https://www.google.com', 'https://reliefweb.int/sites/default/files/styles/thumbnail/public/previews/c5/2d/c52de4ba-42d8-4383-8310-eb1a6966e803.png'],
+    ['Bangladesh', 'Report #2', 'Category #1', '2021-01-01', 'https://www.google.com', 'https://reliefweb.int/sites/default/files/styles/thumbnail/public/previews/c5/2d/c52de4ba-42d8-4383-8310-eb1a6966e803.png'],
+    ['Cambodia', 'Report #3', 'Category #2', '2021-01-01', 'https://www.google.com', 'https://reliefweb.int/sites/default/files/styles/thumbnail/public/previews/c5/2d/c52de4ba-42d8-4383-8310-eb1a6966e803.png']],
     columns=['Country', 'Title', 'Category', 'Date', 'Link', 'Image'])
 test_df['Date'] = pd.to_datetime(test_df['Date'])
 
 test_df = pd.DataFrame([
-    ['Australia', 'Report #1', 'Category #1', 33, 'https://www.google.com', 'https://reliefweb.int/sites/default/files/styles/thumbnail/public/previews/c5/2d/c52de4ba-42d8-4383-8310-eb1a6966e803.png'],
-    ['Canada', 'Report #2', 'Category #1', 66, 'https://www.google.com', 'https://reliefweb.int/sites/default/files/styles/thumbnail/public/previews/c5/2d/c52de4ba-42d8-4383-8310-eb1a6966e803.png'],
-    ['China', 'Report #3', 'Category #2', 77, 'https://www.google.com', 'https://reliefweb.int/sites/default/files/styles/thumbnail/public/previews/c5/2d/c52de4ba-42d8-4383-8310-eb1a6966e803.png']],
+    ['Afghanistan', 'Report #1', 'Category #1', 33, 'https://www.google.com', 'https://reliefweb.int/sites/default/files/styles/thumbnail/public/previews/c5/2d/c52de4ba-42d8-4383-8310-eb1a6966e803.png'],
+    ['Bangladesh', 'Report #2', 'Category #1', 66, 'https://www.google.com', 'https://reliefweb.int/sites/default/files/styles/thumbnail/public/previews/c5/2d/c52de4ba-42d8-4383-8310-eb1a6966e803.png'],
+    ['Cambodia', 'Report #3', 'Category #2', 67, 'https://www.google.com', 'https://reliefweb.int/sites/default/files/styles/thumbnail/public/previews/c5/2d/c52de4ba-42d8-4383-8310-eb1a6966e803.png']],
     columns=['Country', 'Title', 'Category', 'Date', 'Link', 'Image'])
 
 # Create a json of the dataframe

@@ -34,8 +34,13 @@
     <!-- For Bootstrap Select -->
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+    <!--Plugin CSS file with desired skin-->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css" />
+    <!--Plugin JavaScript file-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
 
     <!-- Icons -->
     <script src="https://kit.fontawesome.com/f3135b3376.js" crossorigin="anonymous"></script>
@@ -65,8 +70,8 @@
                     name="country" data-dropdown>
                     <option value="">&#xf3c5;&nbsp;&nbsp;Country</option>
                     <option id="afg" value="Afghanistan">&nbsp;&nbsp;Afghanistan</option>
-                    <option value="canada">&nbsp;&nbsp;Canada</option>
-                    <option value="china">&nbsp;&nbsp;China</option>
+                    <option value="Bangladesh">&nbsp;&nbsp;Bangladesh</option>
+                    <option value="Bhutan">&nbsp;&nbsp;Bhutan</option>
                 </select>
             </div>
             <br>
@@ -81,9 +86,6 @@
             </div>
             <br>
             <br>
-            <div style="width:200px;">
-                <input type="text" class="js-range-slider" value="" />
-            </div>
             <table cellspacing="5" cellpadding="5">
                 <tbody>
                     <tr>
@@ -96,6 +98,26 @@
                     </tr>
                 </tbody>
             </table>
+            <!-- <table cellspacing="5" cellpadding="5">
+                <thead>
+                    <tr>
+                        <th colspan="3">
+                            <h4>Age Filter</h4>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <p class="js-input-from" id="min" name="min" value="0">
+                        </td>
+                        <td style="width:200px;"><input type="text" class="js-range-slider" value="" /></td>
+                        <td>
+                            <p class="js-input-to" id="max" name="max" value="0">
+                        </td>
+                    </tr>
+                </tbody>
+            </table> -->
         </form>
     </div>
 
@@ -103,11 +125,6 @@
         <table class="table mydatatable" id="mydatatable">
             <thead>
                 <tr>
-                    <!-- <th class="text-center"><input type="checkbox" class="selectAll" name="selectAll" value="all"></th>
-                    <th>imageShow</th>
-                    <th>valueShow</th>
-                    <th>countrySearch</th>
-                    <th>categorySearch</th> -->
                     <th> </th>
                     <th> </th>
                     <th> </th>
@@ -142,6 +159,9 @@
                 <td>
                     ${Category}
                 </td>
+                <td>
+                    ${Date}
+                </td>
             </tr>`;
             }).join('');
         }
@@ -151,22 +171,22 @@
         //const evidenceData = JSON.parse('{{ test_df|tojson }}');
 
 
-        // // Trying to build min max date
-        // $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-        //     var min = parseInt($('#min').val(), 10);
-        //     var max = parseInt($('#max').val(), 10);
-        //     var date = parseFloat(data[3]) || 0; // use data for the age column
+        // Build min max date
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            var min = parseInt($('#min').val(), 10);
+            var max = parseInt($('#max').val(), 10);
+            var date = parseFloat(data[4]) || 0; // use data for the age column
 
-        //     if (
-        //         (isNaN(min) && isNaN(max)) ||
-        //         (isNaN(min) && date <= max) ||
-        //         (min <= date && isNaN(max)) ||
-        //         (min <= date && date <= max)
-        //     ) {
-        //         return true;
-        //     }
-        //     return false;
-        // });
+            if (
+                (isNaN(min) && isNaN(max)) ||
+                (isNaN(min) && date <= max) ||
+                (min <= date && isNaN(max)) ||
+                (min <= date && date <= max)
+            ) {
+                return true;
+            }
+            return false;
+        });
 
 
 
@@ -177,11 +197,12 @@
                 "ordering": "false",
                 "select": "single",
                 "dom": "<<t>ip>",
+                // We need those columns to be searchable, but not visible
                 "columnDefs": [{
-                        targets:[2,3],
-                        visible:false,
-                        searchable:true,
-                    }]
+                    targets: [2, 3, 4],
+                    visible: false,
+                    searchable: true,
+                }]
             });
             // Add the search filter to the side
             $('#searchInput').keyup(function () {
@@ -196,52 +217,66 @@
             });
             // Min/Max
             $('#min, #max').keyup(function () {
-                oTable.draw();
+                oTable.columns(4).draw();
             });
         })
 
-        // $(document).ready(function () {
-        //     var oTable = $('#mydatatable').DataTable(
-        //         {
-        //             columnDefs: [
-        //                 {
-        //                     orderable: false,
-        //                     className: 'text-center',
-        //                     targets: 0,
-        //                 }]
-        //         });
-        //     $(".selectAll").on("click", function (e) {
-        //         if ($(this).is(":checked")) {
-        //             oTable.rows().select();
-        //         } else {
-        //             oTable.rows().deselect();
-        //         }
-        //     });
-
-        //     $('#searchInput').on('input', () => {
-        //         oTable.search($('#searchInput').val()).draw();
-        //     });
-
-        //     $('select#countrySelector').on('change', () => {
-        //         oTable.search($("#countrySelector").val()).draw();
-        //     });
-
-        //     $('select#categorySelector').on('change', () => {
-        //         oTable.search($("#categorySelector").val()).draw();
-        //     });
-        // });
-
-
-        // $(document).ready(function () {
-        //     var oTable = $('#mydatatable').dataTable();
-
-        //     // Event listener to the two range filtering inputs to redraw on input
-        //     $('#min, #max').keyup(function () {
-        //         oTable.draw();
-        //     });
-        // });
 
         buildTable(evidenceData)
+
+        // // Ion Range Slider - 
+        // var $range = $(".js-range-slider"),
+        //     $inputFrom = $(".js-input-from"),
+        //     $inputTo = $(".js-input-to"),
+        //     instance,
+        //     min = 2020,
+        //     max = 2023,
+        //     from = 0,
+        //     to = 0;
+
+        // $range.ionRangeSlider({
+        //     type: "double", min: min, max: max,
+        //     onStart: updateInputs,
+        //     onChange: updateInputs,
+        //     onFinish: updateInputs
+        // });
+        // instance = $range.data("ionRangeSlider");
+
+        // function updateInputs(data) {
+        //     from = data.from;
+        //     to = data.to;
+        //     $inputFrom.prop("value", from);
+        //     $inputTo.prop("value", to);
+
+        //     // Force keyup event to run min max event handler
+        //     $('#min').trigger('keyup');
+        // }
+
+        // $inputFrom.on("input", function () {
+        //     var val = $(this).prop("value");
+        //     // validate
+        //     if (val < min) {
+        //         val = min;
+        //     } else if (val > to) {
+        //         val = to;
+        //     }
+        //     instance.update({
+        //         from: val
+        //     });
+        // });
+
+        // $inputTo.on("input", function () {
+        //     var val = $(this).prop("value");
+        //     // validate
+        //     if (val < from) {
+        //         val = from;
+        //     } else if (val > max) {
+        //         val = max;
+        //     }
+        //     instance.update({
+        //         to: val
+        //     });
+        // });
 
     </script>
 
