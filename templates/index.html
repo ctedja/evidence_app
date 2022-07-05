@@ -45,6 +45,7 @@
     <!-- <div class="title">
         <h1>Regional Evidence</h1>
     </div> -->
+    
     <div class="filters">
         <div class="title">
             <span><img src="{{ url_for('static', filename='images/wfpLogo.png') }}" style="height:25px;" />
@@ -53,6 +54,7 @@
                 <hr><br>
             </span>
         </div>
+
         <form class="form">
             <div>
                 <input type="text" id="searchInput" class="form-control" placeholder="&#xf002;&nbsp;&nbsp;Search">
@@ -97,7 +99,8 @@
         </form>
     </div>
     </div>
-    <div class="main" id="tester">
+
+    <div class="main">
         <table class="table mydatatable" id="table">
             <thead>
                 <th> </th>
@@ -129,73 +132,63 @@
         }
 
         // Pull in our data
-        // const evidenceData = JSON.parse('{{ evidence_dataset|tojson }}');
-        const evidenceData = JSON.parse('{{ test_df|tojson }}');
+        const evidenceData = JSON.parse('{{ evidence_dataset|tojson }}');
+        //const evidenceData = JSON.parse('{{ test_df|tojson }}');
 
 
         // Trying to build min max date
         $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
             var min = parseInt($('#min').val(), 10);
             var max = parseInt($('#max').val(), 10);
-            var age = parseFloat(data[3]) || 0; // use data for the age column
+            var date = parseFloat(data[3]) || 0; // use data for the age column
 
             if (
                 (isNaN(min) && isNaN(max)) ||
-                (isNaN(min) && age <= max) ||
-                (min <= age && isNaN(max)) ||
-                (min <= age && age <= max)
+                (isNaN(min) && date <= max) ||
+                (min <= date && isNaN(max)) ||
+                (min <= date && date <= max)
             ) {
                 return true;
             }
             return false;
         });
 
-        // $(document).ready(function () {
-        //     var table = $('.mydatatable').DataTable();
-
-        //     // Event listener to the two range filtering inputs to redraw on input
-
-        // });
-
-
-
 
 
         // Pull in the Data Tables via jQuery
+        $(document).ready(function () {
+            var oTable = $('.mydatatable').DataTable({
+                "pagingType": "simple",
+                "ordering": "false",
+                "select": "single",
+                "dom": '<<t>ip>'
+            });
+            // Add the search filter to the side
+            $('#searchInput').keyup(function () {
+                oTable.search($(this).val()).draw();
+            });
+            // Country Selector
+            $('select#countrySelector').change(function () {
+                oTable.search($(this).val()).draw();
+            });
+            $('select#categorySelector').change(function () {
+                oTable.search($(this).val()).draw();
+            });
+            // Min/Max
+            $('#min, #max').keyup(function () {
+                oTable.draw();
+            });
+        });
+
 
         // $(document).ready(function () {
-        //     var oTable = $('.mydatatable').dataTable({
-        //         "pagingType": "simple",
-        //         "ordering": "false",
-        //         "select": "single",
-        //         "dom": '<<t>ip>'
-        //     });
-        //     // Add the search filter to the side
-        //     $('#searchInput').keyup(function () {
-        //         oTable.search($(this).val()).draw();
-        //     });
-        //     // Country Selector
-        //     $('select#countrySelector').change(function () {
-        //         oTable.fnFilter($(this).val());
-        //     });
-        //     $('select#categorySelector').change(function () {
-        //         oTable.fnFilter($(this).val());
-        //     });
-        //     // Min/Max
+        //     var oTable = $('#mydatatable').dataTable();
+
+        //     // Event listener to the two range filtering inputs to redraw on input
         //     $('#min, #max').keyup(function () {
         //         oTable.draw();
         //     });
         // });
-
-
-        $(document).ready(function () {
-            var table = $('#mydatatable').DataTable();
-
-            // Event listener to the two range filtering inputs to redraw on input
-            $('#min, #max').keyup(function () {
-                table.draw();
-            });
-        });
 
         buildTable(evidenceData)
 
