@@ -21,15 +21,15 @@ body {
     z-index:1;
 } */
 
-.title span{
-    color:#007dbc;
-    font-size:20px;
-    font-weight:600;
+.title span {
+    color: #007dbc;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 h1 {
-    color:#007dbc;
-    font-size:20px;
+    color: #007dbc;
+    font-size: 20px;
     /* top: 50%;
     transform: translate(-50%, -50%);
     padding-left:10px; */
@@ -41,6 +41,7 @@ h1 {
     height: 100%;
     overflow: hidden;
     padding-left: 20px;
+    padding-right:20px;
     padding-top: 20px;
     border-right: solid 1px #f1f1f1;
 }
@@ -50,16 +51,17 @@ h1 {
     width: 66%;
     height: 100%;
     left: 34%;
-    top: -12%;
+    top: -60px;
     /* overflow: auto; */
-    padding-left:10px;
-    padding-top:20px;
+    padding-left: 10px;
+    padding-right:10px;
+    padding-top: 20px;
 }
 
 /* Search filter. Most of it is already in bootstrap. */
 .form-control {
-    font-size:12px;
-    max-width:80%;
+    font-size: 12px;
+    max-width: 100%;
     border: none;
     background-color: #e6f2f8;
     font-family: 'Open Sans', 'Helvetica Neue', sans-serif, 'FontAwesome';
@@ -67,8 +69,8 @@ h1 {
 
 /* Search filter. Most of it is already in bootstrap. */
 .form-control:focus {
-    font-size:12px;
-    max-width:80%;
+    font-size: 12px;
+    max-width: 100%;
     box-shadow: 0 0 0 0.25rem #cce5f2;
     background-color: #e6f2f8;
     color: #767676;
@@ -80,71 +82,55 @@ h1 {
     -moz-appearance: none;
     appearance: none;
     font-family: 'Open Sans', 'Helvetica Neue', sans-serif, 'FontAwesome';
-    font-size:12px;
-    max-width:80%;
+    font-size: 12px;
     color: #767676;
-    padding-left: 10px;
     margin: 0;
-    width: 100%;
+    max-width: 100%;
     cursor: inherit;
     border: none;
     /* background: url(https://stackoverflow.com/favicon.ico) 0% / 15% no-repeat white; */
 }
 
-.form-select *{
+.filter-option {
     font-size:12px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance:none;
-    max-width:80%;
-    line-height: 500%;
-    padding-top: 30px;
-    border: none;
-    height:50px;
-    padding:10px;
-    line-height: 200px;
-    color: #007dbc;
 }
 
-.form-select option{
-    font-size:12px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance:none;
-    max-width:80%;
-    line-height: 500%;
-    padding: 30px;
-    border: none;
-    height:50px;
-    padding:10px;
-    line-height: 200px;
-    height:40px;
-    color: red;
+.dropdown-menu {
+    font-size: 12px;
 }
 
-form-select.decorated option:hover {
-    box-shadow: 0 0 10px 100px red inset;
+.dropdown-item.active, .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #007dbc;
 }
 
-.countrySelector {
-    position: relative;
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 80%;
-    height: 5%;
-    left: 0;
-    top: 20%;
 }
 
-.categorySelector {
-    position: relative;
-    width: 80%;
-    height: 5%;
-    left: 0;
-    top: 30%;
+.bootstrap-select>.dropdown-toggle.bs-placeholder, .bootstrap-select>.dropdown-toggle.bs-placeholder:active {
+    color: #999;
+    background-color:white;
+    border: none;
 }
 
+.bootstrap-select>.dropdown-toggle.bs-placeholder:focus .bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
+    background-color:#007dbc;
+    box-shadow: 0 0 0 0.25rem #007dbc;
+    border:none;
+}
+
+.bootstrap-select .dropdown-toggle:focus, .bootstrap-select>select.mobile-device:focus+.dropdown-toggle {
+    outline: thin dotted #58adb3!important;
+    outline: 5px #58a -webkit-focus-ring-color!important;
+    outline-offset: -2px;
+}
+
+/* Table Options */
 table {
     font-size: 10px;
-    padding-left:10px;
+    padding-left: 10px;
     border-bottom: 0px;
 }
 
@@ -153,7 +139,7 @@ table td {
     margin: 10px;
     border-bottom: 0px;
     vertical-align: top;
-    line-height:250%;
+    line-height: 250%;
 }
 
 .tableThumbnail {
@@ -166,19 +152,19 @@ table td {
 }
 
 thead {
-    visibility:hidden;
+    visibility: hidden;
 }
 
 .tableTitle {
-    top:0;
+    top: 0;
     font-size: 12px;
-    font-weight:700;
+    font-weight: 700;
 }
 
 .tableCountry span {
     font-size: 10px;
-    color:#007dbc;
-    background-color:#e6f2f8;
+    color: #007dbc;
+    background-color: #e6f2f8;
     border-bottom: 0px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -187,33 +173,33 @@ thead {
 
 .tableCategory {
     font-size: 10px;
-    color:#adadad;
-    background-color:#f1f1f1;
+    color: #adadad;
+    background-color: #f1f1f1;
     border-bottom: 0px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
 }
 
-.tableDate span{
+.tableDate span {
     font-size: 10px;
-    text-align:right;
-    color:#adadad;
+    text-align: right;
+    color: #adadad;
 }
 
 .dataTables_filter {
     background-color: #007dbc;
-    color:#007dbc;
+    color: #007dbc;
 }
 
 .dataTables_info {
     font-size: 12px;
-    color:#d6d6d6;
+    color: #d6d6d6;
 }
 
 .dataTables_paginate {
     font-size: 12px;
-    color:#d6d6d6;
+    color: #d6d6d6;
 }
 
 a {
@@ -231,16 +217,17 @@ a:hover {
 }
 
 ::-webkit-scrollbar {
-	width: 5px;
-	height: 5px;
-	border-left: 0;
-	background: rgba(0, 0, 0, 0.05);
-  }
- ::-webkit-scrollbar-track {
-	background: none;
-  }
- ::-webkit-scrollbar-thumb {
-	background: #b3d8eb;
-	border-radius: 0;
-  }
+    width: 5px;
+    height: 5px;
+    border-left: 0;
+    background: rgba(0, 0, 0, 0.05);
+}
 
+::-webkit-scrollbar-track {
+    background: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #b3d8eb;
+    border-radius: 0;
+}
