@@ -12,3 +12,4 @@ pandas==1.4.2
 flask
 json5==0.9.6
 jsonschema==4.4.0
+openpyxl==3.0.9
