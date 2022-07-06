@@ -1,9 +1,9 @@
-aiohttp @ file:///C:/ci/aiohttp_1646806572557/work
-aiosignal @ file:///tmp/build/80754af9/aiosignal_1637843061372/work
-alabaster @ file:///home/ktietz/src/ci/alabaster_1611921544520/work
+aiohttp
+aiosignal
+alabaster
 anaconda-client==1.10.0
-anaconda-project @ file:///tmp/build/80754af9/anaconda-project_1637161053845/work
-anyio @ file:///C:/ci/anyio_1644481921011/work/dist
+anaconda-project
+anyio
 appdirs==1.4.4
 argon2-cffi @ file:///opt/conda/conda-bld/argon2-cffi_1645000214183/work
 argon2-cffi-bindings @ file:///C:/ci/argon2-cffi-bindings_1644551690056/work
